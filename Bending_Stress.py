@@ -40,7 +40,7 @@ app.layout = html.Div(
                 {"label": "9 5/8", "value": "9 5/8"},
             ],
             value=["5"],  # Set a default value to trigger the callbacks
-            placeholder="Select an casing size",
+            placeholder="Select a casing size",
             style={"width": "50%", "margin": "auto", "fontSize": "16px"}
         ),
         html.Div(
