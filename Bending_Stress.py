@@ -4,7 +4,7 @@ import math
 import plotly.graph_objs as go
 from dash.dependencies import Input, Output
 
-app = Dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 server = app.server
 
 # Layout of the app
