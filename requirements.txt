@@ -1,4 +1,4 @@
 dash== 2.8.1
 gunicorn
 plotly
-
+dash-bootstrap-components==1.0.0 
