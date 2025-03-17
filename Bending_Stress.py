@@ -1258,7 +1258,7 @@ def handle_selections(motor_equipment, motor1, motor2, seal_equipment, seal1, se
 
     if seal_equipment is not None:
         seal1_I = sealI  # Assign the correct moment of inertia
-        print(f'Seal I={seal1_I}')
+        #print(f'Seal I={seal1_I}')
         if seal2 != "None":  # Check if seal2 is not "None"
             seal2_I = sealI  # Assign the second seal's moment of inertia
         else:
@@ -1418,7 +1418,7 @@ def handle_selections(motor_equipment, motor1, motor2, seal_equipment, seal1, se
     casing_id_value = casing_id_value if casing_id_value is not None else 0
     motor_OD = motor_OD if motor_OD is not None else 0
     pump_OD = pump_OD if pump_OD is not None else 0
-    print(casing_id_value)
+    #print(casing_id_value)
 
     if casing_id_value:
         deviationcal = ((casing_id_value - motor_OD) + (casing_id_value - pump_OD)) / 2
@@ -2202,7 +2202,7 @@ def handle_selections(motor_equipment, motor1, motor2, seal_equipment, seal1, se
                 max_deflection = MyArray_deflection[i]
 
     # Assuming you need to store the max_deflection result somewhere
-    print(max_deflection * -1)
+    #print(max_deflection * -1)
     MyArray_Stress_orientation_modifier=[0]*1002
 
 
@@ -2261,9 +2261,9 @@ def handle_selections(motor_equipment, motor1, motor2, seal_equipment, seal1, se
             MyArray_mod_4[i] = 1
 
     max3_value = max(MyArray_mod_3)
-    print(f"Maximum value of MyArray_mod_3: {max3_value}")
+    #print(f"Maximum value of MyArray_mod_3: {max3_value}")
     min4_value = min(MyArray_mod_4)
-    print(f"Maximum value of MyArray_mod_4: {min4_value}")
+    #print(f"Maximum value of MyArray_mod_4: {min4_value}")
 
     # Final loop for stress calculation
     if pump2 is not None:
@@ -2275,11 +2275,11 @@ def handle_selections(motor_equipment, motor1, motor2, seal_equipment, seal1, se
                 #print("mod3")
                 MyArray_stress[i] = ((MyArray_moment[i] * MyArray_centroid[i] / MyArray_inertia2[i] * MyArray_mod_1[i] / stress_reduction) / MyArray_mod_4[i]) + MyArray_stress_wtadder[i] + MyArray_Stress_orientation_modifier[i]
             else:
-                 #Print the values of the arrays for the specific index i
+                 #print the values of the arrays for the specific index i
                 MyArray_stress[i] = ((MyArray_moment[i] * MyArray_centroid[i] / MyArray_inertia2[i] * MyArray_mod_1[i]) / MyArray_mod_4[i]) + MyArray_stress_wtadder[i] + MyArray_Stress_orientation_modifier[i]
 
-    print(f'seal_base_stress_modifier={seal_base_stress_modifier}')
-    print(f'stress Reduction={stress_reduction}')
+    #print(f'seal_base_stress_modifier={seal_base_stress_modifier}')
+    #print(f'stress Reduction={stress_reduction}')
     # Initialize the max_stress variable
     max_stress = 0
     #print(MyArray_stress)
@@ -2290,7 +2290,7 @@ def handle_selections(motor_equipment, motor1, motor2, seal_equipment, seal1, se
             #print (max_stress)
     max_stress=round(max_stress)
     max_stress = "{:,}".format(max_stress)
-    # Assuming you want to print or store the max_stress
+    # Assuming you want to #print or store the max_stress
     #print(max_stress)
 
     # Now loop through MyArray_ft_increment in steps of 20 and store in MyArray_axis
@@ -2305,7 +2305,7 @@ def handle_selections(motor_equipment, motor1, motor2, seal_equipment, seal1, se
     #print(MyArray_stress)
 
     if n_clicks > 0:
-        #print("it worked")
+        print("it worked")
 
         fig = go.Figure(
             data=[
@@ -2437,13 +2437,13 @@ def update_clearance_plot(n_clicks, motor_equipment, seal_equipment, gassep_equi
         gassep_y = [gassep_radius * math.sin(t) for t in theta]  # Y points of motor circle with updated radius
 
         if pump_equipment == "401":
-            print("ohno")
+            #print("ohno")
             pump_final = "400"
         else:
             pump_final = pump_equipment
 
         pump_equipment2 = float(pump_final)
-        print(f'pump={pump_equipment2}')
+        #print(f'pump={pump_equipment2}')
         pump_radius = pump_equipment2 / 200  # Assuming seal_selection is in diameter, divide by 200 for radius
         pump_x = [pump_radius * math.cos(t) for t in theta]  # X points of motor circle with updated radius
         pump_y = [pump_radius * math.sin(t) for t in theta]  # Y points of motor circle with updated radius
@@ -2476,9 +2476,9 @@ def update_clearance_plot(n_clicks, motor_equipment, seal_equipment, gassep_equi
         motor_clearance=casing_id_value-(motor_radius*2)
         mle_equipment= casing_id_value-(selected_radius*2)-0.615
         mle_motor = casing_id_value - (motor_radius * 2) - 0.615 / 2
-        print(casing_id_value)
-        print(mle_equipment)
-        print(mle_motor)
+        #print(casing_id_value)
+        #print(mle_equipment)
+        #print(mle_motor)
         #print(mle_clearance)
         a = .65  # Half the width (1 wide)
         b = 0.3075  # Half the height (0.615 tall)
