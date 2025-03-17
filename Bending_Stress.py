@@ -4,7 +4,7 @@ import math
 import plotly.graph_objs as go
 from dash.dependencies import Input, Output
 
-app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 server = app.server
 
 # Layout of the app
@@ -2620,4 +2620,4 @@ def update_clearance_plot(n_clicks, motor_equipment, seal_equipment, gassep_equi
         return go.Figure()
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run_server(debug=True)
