@@ -2325,7 +2325,12 @@ def handle_selections(motor_equipment, motor1, motor2, seal_equipment, seal1, se
                     name="Stress",
                     line=dict(color="red")
                 )
-            ]
+            ],
+             layout=go.Layout(  # Add a layout to ensure the figure is fully defined
+                title="Stress vs. Equipment String Length",  # Add a title
+                xaxis=dict(title="Equipment String Length (ft)"),  # Label for x-axis
+                yaxis=dict(title="Stress (lbs)"),  # Label for y-axis
+            )
         )
         return fig  # Return two separate figures for stress/deflection and clearance (circles)
     else:
