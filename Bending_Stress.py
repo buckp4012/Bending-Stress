@@ -2317,47 +2317,50 @@ def handle_selections(motor_equipment, motor1, motor2, seal_equipment, seal1, se
         print(f"Data points: {len(MyArray_ft_increment)}")
 
         fig = go.Figure(
-            data=[
-                go.Scattergl(
-                    x=MyArray_ft_increment,
-                    y=MyArray_stress,
-                    mode="lines",
-                    name="Stress",
-                    line=dict(color="red")
-                ),
-                go.Scattergl(
-                    x=MyArray_ft_increment,
-                    y=MyArray_deflection,
-                    mode="lines",
-                    name="Deflection",
-                    line=dict(color="blue"),
-                    yaxis="y2"  # Specify that this trace should use the second y-axis
-                )
-            ],
-            layout=go.Layout(
-                title="Max Stress and Deflection Plot",
-                xaxis=dict(title="Equipment String Length (ft)"),
-                yaxis=dict(title="Bending Stress (psi)"),  # Primary y-axis
-                yaxis2=dict(
-                    title="Deflection (in)",  # Secondary y-axis title
-                    overlaying="y",  # Overlay this axis on the primary y-axis
-                    side="right"  # Place the second y-axis on the right
-                ),
-                annotations=[  # Add annotation for max stress above the plot
-                    dict(
-                        x=0.5,  # Position annotation at the center of the plot (adjust as necessary)
-                        y=1.2,  # Position above the plot (y = 1.1 is above the plot)
-                        xref="paper",  # Use relative coordinates for x (0 to 1 across the plot width)
-                        yref="paper",  # Use relative coordinates for y (0 to 1 across the plot height)
-                        text=f"Max Stress: {max_stress} psi<br>Dog Leg Severity: {dls} deg/100ft",  # Text for the annotation
-                        showarrow=False,  # Don't show an arrow
-                        font=dict(size=14, color="black"),  # Font settings for the annotation
-                        bgcolor="rgba(255, 255, 255, 0.7)",  # Background color for the text box
-                        borderpad=4  # Padding around the text box
-                    )
-                ]
-            )
-        )
+    data=[
+        go.Scattergl(
+            x=MyArray_ft_increment,
+            y=MyArray_stress,
+            mode="lines",
+            name="Stress",
+            line=dict(color="red")
+        ),
+        # Uncomment the next block if you want to include the second trace
+        # go.Scattergl(
+        #     x=MyArray_ft_increment,
+        #     y=MyArray_deflection,
+        #     mode="lines",
+        #     name="Deflection",
+        #     line=dict(color="blue"),
+        #     yaxis="y2"  # Specify that this trace should use the second y-axis
+        # )
+    ],
+    layout=go.Layout(
+        title="Max Stress and Deflection Plot",
+        xaxis=dict(title="Equipment String Length (ft)"),
+        yaxis=dict(title="Bending Stress (psi)"),  # Primary y-axis
+        # Uncomment and modify the next block if you need a second y-axis
+        # yaxis2=dict(
+        #     title="Deflection (in)",  # Secondary y-axis title
+        #     overlaying="y",  # Overlay this axis on the primary y-axis
+        #     side="right"  # Place the second y-axis on the right
+        # ),
+        # Uncomment and modify the next block if you want annotations
+        # annotations=[  # Add annotation for max stress above the plot
+        #     dict(
+        #         x=0.5,  # Position annotation at the center of the plot (adjust as necessary)
+        #         y=1.2,  # Position above the plot (y = 1.1 is above the plot)
+        #         xref="paper",  # Use relative coordinates for x (0 to 1 across the plot width)
+        #         yref="paper",  # Use relative coordinates for y (0 to 1 across the plot height)
+        #         text=f"Max Stress: {max_stress} psi<br>Dog Leg Severity: {dls} deg/100ft",  # Text for the annotation
+        #         showarrow=False,  # Don't show an arrow
+        #         font=dict(size=14, color="black"),  # Font settings for the annotation
+        #         bgcolor="rgba(255, 255, 255, 0.7)",  # Background color for the text box
+        #         borderpad=4  # Padding around the text box
+        #     )
+        # ]
+    )
+)
 
 
         return fig  # Return two separate figures for stress/deflection and clearance (circles)
