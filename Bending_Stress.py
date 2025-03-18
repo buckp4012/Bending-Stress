@@ -353,7 +353,7 @@ html.Div(
              ),
         html.Div(
             children=[
-                html.Button('Generate Plot', id='generate-plot-button', n_clicks=0, style={'fontSize': '18px', 'padding': '10px 20px'})
+                html.Button('Generate Stress Plot', id='generate-plot-button', n_clicks=0, style={'fontSize': '18px', 'padding': '10px 20px'})
             ],
             style={'marginTop': '20px'}
         ),
@@ -364,6 +364,11 @@ html.Div(
             ],
             style={"marginTop": "20px"}
         ),
+        html.Div(
+            children=[
+                html.Button('Generate Clearance Plot', id='clearance-plot-button', n_clicks=0, style={'fontSize': '18px', 'padding': '10px 20px'})
+            ],
+            style={'marginTop': '20px'}
         html.Div(
             children=[
                 #html.Label("Clearance Plot:"),
@@ -2356,7 +2361,7 @@ def handle_selections(motor_equipment, motor1, motor2, seal_equipment, seal1, se
         return go.Figure() # Return empty figures when no button click has occurred
 @app.callback(
     Output("clearance-plot", "figure"),
-    [Input("generate-plot-button", "n_clicks"),
+    [Input("clearance-plot-button", "n_clicks"),
      Input("motor-series-dropdown", "value"),
     Input("seal-series-dropdown", "value"),
     Input("gas-sep-series-dropdown", "value"),
