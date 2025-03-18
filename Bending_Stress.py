@@ -2312,6 +2312,9 @@ def handle_selections(motor_equipment, motor1, motor2, seal_equipment, seal1, se
 
     if n_clicks > 0:
         print("it worked")
+        print(f"Max Stress: {max_stress}")
+        print(f"Dog Leg Severity: {dls}")
+        print(f"Data points: {len(MyArray_ft_increment)}")
 
         fig = go.Figure(
             data=[
