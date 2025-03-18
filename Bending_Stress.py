@@ -369,6 +369,7 @@ html.Div(
                 html.Button('Generate Clearance Plot', id='clearance-plot-button', n_clicks=0, style={'fontSize': '18px', 'padding': '10px 20px'})
             ],
             style={'marginTop': '20px'}
+        ),
         html.Div(
             children=[
                 #html.Label("Clearance Plot:"),
