@@ -2319,15 +2319,15 @@ def handle_selections(motor_equipment, motor1, motor2, seal_equipment, seal1, se
         fig = go.Figure(
             data=[
                 go.Scattergl(
-            x=[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],  # Equipment String Length (x-axis)
-            y = [1000, 1200, 1400, 1600, 1800, 2000, 2200, 2400, 2600, 2800, 3000],  # Make sure MyArray_ft_increment has data
+                    x=[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],  # Equipment String Length (x-axis)
+                    y = [1000, 1200, 1400, 1600, 1800, 2000, 2200, 2400, 2600, 2800, 3000],  # Make sure MyArray_ft_increment has data
           # Make sure MyArray_stress has data
-            mode="lines",  # Lines without markers
-            name="Stress",
-            line=dict(color="red")
+                    mode="lines",  # Lines without markers
+                    name="Stress",
+                    line=dict(color="red")
+                )
+            ]
         )
-    ]
-)
         return fig  # Return two separate figures for stress/deflection and clearance (circles)
     else:
         return go.Figure() # Return empty figures when no button click has occurred
