@@ -2318,14 +2318,14 @@ def handle_selections(motor_equipment, motor1, motor2, seal_equipment, seal1, se
 
         fig = go.Figure(
             data=[
-                go.Scatter(
+                go.Scattergl(
                     x=MyArray_ft_increment,
                     y=MyArray_stress,
                     mode="lines",
                     name="Stress",
                     line=dict(color="red")
                 ),
-                go.Scatter(
+                go.Scattergl(
                     x=MyArray_ft_increment,
                     y=MyArray_deflection,
                     mode="lines",
