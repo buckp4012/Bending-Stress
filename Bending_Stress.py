@@ -924,7 +924,7 @@ def update_pump_dropdowns(selected_equipment):
     ]
 )
 def handle_selections(motor_equipment, motor1, motor2, seal_equipment, seal1, seal2,gassep_equipment,gassep1, gassep2, pump_equipment, pump1, pump2, pump3, pump4, pump5, pump6, tubing_effect, stinger_effect, dls, casing_dim, casing_OD, casing_weight, orientation, t_path, t_path_seal,ext_wt, n_clicks):
-     motor_equipment = int(motor_equipment) if motor_equipment is not None else None
+    motor_equipment = int(motor_equipment) if motor_equipment is not None else None
     motor1 = int(motor1) if motor1 is not None else None
     if motor2 and motor2 != "None":  # Ensure motor2 is not None or the string 'None'
         motor2 = int(motor2)
