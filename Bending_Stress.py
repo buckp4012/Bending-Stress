@@ -924,6 +924,185 @@ def update_pump_dropdowns(selected_equipment):
     ]
 )
 def handle_selections(motor_equipment, motor1, motor2, seal_equipment, seal1, seal2,gassep_equipment,gassep1, gassep2, pump_equipment, pump1, pump2, pump3, pump4, pump5, pump6, tubing_effect, stinger_effect, dls, casing_dim, casing_OD, casing_weight, orientation, t_path, t_path_seal,ext_wt, n_clicks):
+    motor_equipment = int(motor_equipment) if motor_equipment is not None else None
+    motor1 = int(motor1) if motor1 is not None else None
+    if motor2 and motor2 != "None":  # Ensure motor2 is not None or the string 'None'
+        motor2 = int(motor2)
+    else:
+        motor2 = None
+    segment = 1000  # defines graphing x axis division
+    modulus = 29000000
+
+    bendingdeviation=None
+    #dls_new=None
+    pumpI = None
+    pumpC = None
+    pumpneckC = None
+    pumpneckI = None
+    pump_OD = None
+    pump_OD = None
+    pump_neck_area = None
+    intakeI = None  # estimate
+    intakeC = None
+    intakeneckI = None
+    intakeneckC = None
+    intake_neck_area = None
+    sealC = None
+    sealI = None
+    sealneckC = None
+    sealneckI = None
+    seal_hsg_od = None
+    seal_hsg_id = None
+    seal_neck_area = None
+    # motorI = None  # moment of inertia for 300 motor and pump series is an estimate
+    motorC = None
+    motorneckI = None  # actual
+    motorneckC = None  # actual
+    motor_OD = None
+    motor_neck_area = None
+    stress_concentration_1 = None
+    stress_concentration_2 = None
+
+
+    if pump_equipment is not None:
+        if pump_equipment == "338":
+            pumpI = 4
+            pumpC = 1.69
+            pumpneckC = 1.1  # actual
+            pumpneckI = 0.815  # actual
+            pump_OD = 3.38
+            pump_neck_area = 1.78
+            stress_concentration_1 = 1.15
+            stress_concentration_2 = 1.1
+        elif pump_equipment == "400":
+            pumpI = 6.19
+            pumpC = 2
+            pumpneckC = 1.325
+            pumpneckI = 1.94
+            pump_OD = 4
+            pump_neck_area = 2.686
+            stress_concentration_1 = 1.4
+            stress_concentration_2 = 1.4
+        elif pump_equipment == "401":
+            pumpI = 6.19
+            pumpC = 2
+            pumpneckC = 1.95
+            pumpneckI = 3.08
+            pump_OD = 4
+            pump_neck_area = 3.025
+            stress_concentration_1 = 1.2
+            stress_concentration_2 = 1.15
+
+
+        elif pump_equipment == "538":
+            pumpI = 17.63 #QUESTION
+            pumpC = 2.69
+            pumpneckC = 1.766  # actual
+            pumpneckI = 4.1154756  # actual
+            pump_OD = 5.38
+            pump_neck_area = 3.531
+            stress_concentration_1 = 1.6
+            stress_concentration_2 = 1.4
+
+    if seal_equipment is not None:
+        if seal_equipment == "338":
+            sealC = 1.691
+            sealI = 5.3
+            sealneckC = 1.1  # actual
+            sealneckI = 1.541273  # actual
+            seal_hsg_od = 3.38
+            seal_hsg_id = 3
+            seal_neck_area = 1.98
+
+        elif seal_equipment == "400":
+            sealC = 2.01
+            sealI = 5.62
+            sealneckC = 1.435  # actual
+            sealneckI = 1.76  # actual
+            seal_hsg_od = 4
+            seal_hsg_id = 3.5
+            seal_neck_area = 1.572
+        elif seal_equipment == "513":
+            sealC = 2.566
+            sealI = 11.75
+            sealneckC = 1.765  # actual
+            sealneckI = 5.413  # actual
+            seal_hsg_od = 5.13
+            seal_hsg_id = 4.527
+            seal_neck_area = 4.518
+
+    motorI = None
+
+    # Check if motor_equipment is provided and not None
+    if motor_equipment is not None:
+        # Set motorI based on motor_equipment
+        if motor_equipment == 375:
+            motor_options = [{"label": str(i), "value": str(i)} for i in [18, 36, 54, 75, 100]]
+            motorI = 8  # Moment of inertia for 375 motor equipment
+            motorC = 1.875
+            motorneckI = 1.445
+            motorneckC = 1.369
+            motor_OD = 3.75
+            motor_neck_area = 2.475
+
+        elif motor_equipment == 420:
+            motor_options = [{"label": str(i), "value": str(i)} for i in [133, 167, 200]]
+            motorI = 12.97  # Moment of inertia for 420 motor equipment
+            motorC = 2.1
+            motorneckI = 1.94
+            motorneckC = 1.3
+            motor_OD = 4.2
+            motor_neck_area = 3.35
+
+        elif motor_equipment == 456:
+            motor_options = [{"label": str(i), "value": str(i)} for i in [45, 60, 75, 90, 120, 150, 180, 240, 300]]
+            motorI = 15.4  # Moment of inertia for 456 motor equipment
+            motorC = 2.28
+            motorneckI = 2.487
+            motorneckC = 1.4375
+            motor_OD = 4.56
+            motor_neck_area = 1.45
+
+        elif motor_equipment ==562:
+            motorI = 25.24  # Moment of inertia for 562 motor equipment
+            motorC = 2.81
+            motorneckI = 5.54756
+            motorneckC = 1.766
+            motor_OD = 5.62
+            motor_neck_area = 5.116
+    if gassep_equipment is not None:
+        if gassep_equipment =="338":
+            intakeI = 4  # estimate
+            intakeC = 1.69
+            intakeneckI = 0.828  # actual
+            intakeneckC = 1.1  # actual
+            intake_neck_area = 1.819  # actual
+        elif gassep_equipment == "400":
+            intakeI = 5.72  # estimate
+            intakeC = 2
+            intakeneckI = 1.1  # actual
+            intakeneckC = 1.125  # actual
+            intake_neck_area = 2.07  # actual
+
+        elif gassep_equipment == "538":
+            intakeI = 15.75  #QUESTION
+            intakeC = 2.69
+            intakeneckI = 5.875  # actual
+            intakeneckC = 1.75  # actual
+            intake_neck_area = 5.991  # actual
+
+
+
+    # Check if equipment is selected and convert it to integer
+    if motor1 is not None and motor1 in motor_configurations.get(motor_equipment, {}):
+        motor1_data = motor_configurations[motor_equipment][motor1]
+        motor_LT_length = motor1_data["length"]
+        motor_LT_weight = motor1_data["weight"]
+
+    else:
+        motor_LT_length = 0
+        motor_LT_weight = 0
+#########################################################
 
     
 
