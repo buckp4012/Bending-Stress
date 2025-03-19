@@ -924,7 +924,7 @@ def update_pump_dropdowns(selected_equipment):
     ]
 )
 def handle_selections(motor_equipment, motor1, motor2, seal_equipment, seal1, seal2,gassep_equipment,gassep1, gassep2, pump_equipment, pump1, pump2, pump3, pump4, pump5, pump6, tubing_effect, stinger_effect, dls, casing_dim, casing_OD, casing_weight, orientation, t_path, t_path_seal,ext_wt, n_clicks):
-    motor_equipment = int(motor_equipment) if motor_equipment is not None else None
+     motor_equipment = int(motor_equipment) if motor_equipment is not None else None
     motor1 = int(motor1) if motor1 is not None else None
     if motor2 and motor2 != "None":  # Ensure motor2 is not None or the string 'None'
         motor2 = int(motor2)
@@ -1102,7 +1102,10 @@ def handle_selections(motor_equipment, motor1, motor2, seal_equipment, seal1, se
     else:
         motor_LT_length = 0
         motor_LT_weight = 0
-#########################################################
+
+
+
+    # Similarly, for motor2
     if motor2 is not None and motor2 in motor_configurations[motor_equipment]:
         motor2_data = motor_configurations[motor_equipment][motor2]
         motor_UT_length = motor2_data["length"]
@@ -1260,7 +1263,7 @@ def handle_selections(motor_equipment, motor1, motor2, seal_equipment, seal1, se
 
     if seal_equipment is not None:
         seal1_I = sealI  # Assign the correct moment of inertia
-        #print(f'Seal I={seal1_I}')
+        print(f'Seal I={seal1_I}')
         if seal2 != "None":  # Check if seal2 is not "None"
             seal2_I = sealI  # Assign the second seal's moment of inertia
         else:
@@ -1420,7 +1423,7 @@ def handle_selections(motor_equipment, motor1, motor2, seal_equipment, seal1, se
     casing_id_value = casing_id_value if casing_id_value is not None else 0
     motor_OD = motor_OD if motor_OD is not None else 0
     pump_OD = pump_OD if pump_OD is not None else 0
-    #print(casing_id_value)
+    print(casing_id_value)
 
     if casing_id_value:
         deviationcal = ((casing_id_value - motor_OD) + (casing_id_value - pump_OD)) / 2
@@ -1438,10 +1441,924 @@ def handle_selections(motor_equipment, motor1, motor2, seal_equipment, seal1, se
     tubing_moment = tubing_deflection * modulus * tubing_I * joint_length * 12 / (joint_length * 12 / 2) ** 3
     tubing_moment_2 = tubing_deflection * modulus * tubing_I2 * joint_length * 12 / (joint_length * 12 / 2) ** 3
 
+    # Initialize the break variables to None
+    break1 = break2 = break3 = break4 = break5 = break6 = break7 = break8 = break9 = break10 = break11 = break12 = None
 
-    
+
+    # This is the condition we're checking
+    if motor1 is not None:
+        break1 = round(motor_LT_length, 1)
+
+    else:
+        break1 = 0
+    if motor2 is not None:
+        break2 = round(motor_UT_length + break1, 1)
+    else:
+        break2 = 0
+
+    if seal1 is not None:
+        break3 = round(motor_UT_length + motor_LT_length + seal1_length, 1)
+    else:
+        break3 = 0
+
+    if seal2 is not None:
+        break4 = round(motor_UT_length + motor_LT_length + seal1_length + seal2_length, 1)
+    else:
+        break4 = 0
+
+    if gassep1 is not None:
+        break5 = round(motor_UT_length + motor_LT_length + seal1_length + seal2_length + gassep1_length, 1)
+    else:
+        break5 = 0
+
+    if gassep2 is not None:
+        break6 = round(motor_UT_length + motor_LT_length + seal1_length + seal2_length + gassep1_length + gassep2_length, 1)
+    else:
+        break6 = 0
+
+    if pump1 is not None and pump2 is not None:
+        break7 = round(motor_UT_length + motor_LT_length + seal1_length + seal2_length + gassep1_length + gassep2_length + pump1_length, 1)
+    else:
+        break7 = 0
+
+    if pump2 is not None and pump3 is not None:
+        break8 = round(motor_UT_length + motor_LT_length + seal1_length + seal2_length + gassep1_length + gassep2_length+ pump1_length + pump2_length, 1)
+    else:
+        break8 = 0
+
+    if pump3 is not None and pump4 is not None:
+        break9 = round(
+            motor_UT_length + motor_LT_length + seal1_length + seal2_length + gassep1_length + gassep2_length + pump1_length + pump2_length + pump3_length,
+            1)
+    else:
+        break9 = 0
+
+    if pump4 is not None and pump5 is not None:
+        break10 = round(
+            motor_UT_length + motor_LT_length + seal1_length + seal2_length + gassep1_length + gassep2_length + pump1_length + pump2_length + pump3_length + pump4_length,
+            1)
+    else:
+        break10 = 0
+
+    if pump5 is not None and pump6 is not None:
+        break11 = round(
+            motor_UT_length + motor_LT_length + seal1_length + seal2_length + gassep1_length + gassep2_length + pump1_length + pump2_length + pump3_length + pump4_length + pump5_length,
+            1)
+    else:
+        break11 = 0
+
+    # Calculate break a, b, c, d, e for each break group
+    # Break 1:
+    if break1 > 0:
+        break1a = break1 + 0.1
+        break1b = break1a + 0.1
+        break1c = break1b + 0.1
+        break1d = break1c + 0.1
+        break1e = break1d + 0.1
+    else:
+        break1a = break1b = break1c = break1d = break1e = 0
+
+    # Break 2:
+    if break2 > 0:
+        break2a = break2 + 0.1
+        break2b = break2a + 0.1
+        break2c = break2b + 0.1
+        break2d = break2c + 0.1
+        break2e = break2d + 0.1
+    else:
+        break2a = break2b = break2c = break2d = break2e = 0
+
+    # Break 3:
+    if break3 > 0:
+        break3a = break3 + 0.1
+        break3b = break3a + 0.1
+        break3c = break3b + 0.1
+        break3d = break3c + 0.1
+        break3e = break3d + 0.1
+    else:
+        break3a = break3b = break3c = break3d = break3e = 0
+
+    # Break 4:
+    if break4 > 0:
+        break4a = break4 + 0.1
+        break4b = break4a + 0.1
+        break4c = break4b + 0.1
+        break4d = break4c + 0.1
+        break4e = break4d + 0.1
+    else:
+        break4a = break4b = break4c = break4d = break4e = 0
+
+    # Break 5:
+    if break5 > 0:
+        break5a = break5 + 0.1
+        break5b = break5a + 0.1
+        break5c = break5b + 0.1
+        break5d = break5c + 0.1
+        break5e = break5d + 0.1
+    else:
+        break5a = break5b = break5c = break5d = break5e = 0
+
+    # Break 6:
+    if break6 > 0:
+        break6a = break6 + 0.1
+        break6b = break6a + 0.1
+        break6c = break6b + 0.1
+        break6d = break6c + 0.1
+        break6e = break6d + 0.1
+    else:
+        break6a = break6b = break6c = break6d = break6e = 0
+
+    # Break 7:
+    if break7 > 0:
+        break7a = break7 + 0.1
+        break7b = break7a + 0.1
+        break7c = break7b + 0.1
+        break7d = break7c + 0.1
+        break7e = break7d + 0.1
+    else:
+        break7a = break7b = break7c = break7d = break7e = 0
+
+    # Break 8:
+    if break8 > 0:
+        break8a = break8 + 0.1
+        break8b = break8a + 0.1
+        break8c = break8b + 0.1
+        break8d = break8c + 0.1
+        break8e = break8d + 0.1
+    else:
+        break8a = break8b = break8c = break8d = break8e = 0
+
+    # Break 9:
+    if break9 > 0:
+        break9a = break9 + 0.1
+        break9b = break9a + 0.1
+        break9c = break9b + 0.1
+        break9d = break9c + 0.1
+        break9e = break9d + 0.1
+    else:
+        break9a = break9b = break9c = break9d = break9e = 0
+
+    # Break 10:
+    if break10 > 0:
+        break10a = break10 + 0.1
+        break10b = break10a + 0.1
+        break10c = break10b + 0.1
+        break10d = break10c + 0.1
+        break10e = break10d + 0.1
+    else:
+        break10a = break10b = break10c = break10d = break10e = 0
+
+    # Break 11:
+    if break11 > 0:
+        break11a = break11 + 0.1
+        break11b = break11a + 0.1
+        break11c = break11b + 0.1
+        break11d = break11c + 0.1
+        break11e = break11d + 0.1
+    else:
+        break11a = break11b = break11c = break11d = break11e = 0
+
+    if break11 != 0:
+        temp_break1 = break11
+        temp_break = break10
+    elif break11 == 0 and break10 != 0:
+        temp_break1 = break10
+        temp_break = break9
+    elif break11 == 0 and break10 == 0 and break9 != 0:
+        temp_break1 = break9
+        temp_break = break8
+    elif break11 == 0 and break10 == 0 and break9 == 0 and break8 != 0:
+        temp_break1 = break8
+        temp_break = break7
+    elif break11 == 0 and break10 == 0 and break9 == 0 and break8 == 0 and break7 != 0:
+        temp_break1 = break7
+        temp_break = break6
+    elif break11 == 0 and break10 == 0 and break9 == 0 and break8 == 0 and break7 == 0 and break6 != 0:
+        temp_break1 = break6
+        temp_break = break5
+    else:
+        temp_break1 = temp_break = 0
 
 
+    tubing_moment_length = 0
+    tubing_moment_increment = 0
+
+    if total_length and temp_break and tubing_moment:
+        # Proceed with calculations if all variables have valid values
+        tubing_moment_length = (total_length - temp_break) / (total_length / 1000)
+        tubing_moment_increment = tubing_moment / tubing_moment_length
+
+
+    stress_concentration_motor = 1.6
+    stress_concentration_motor_A = 1.4
+    seal_base_stress_modifier =0.85
+    stress_reduction = 1
+
+
+
+    # Initialize motor options
+    pump_options = []
+
+    if t_path_seal is None or sealneckC is None or motorC is None:
+        seal_neck_adjuster = 0
+    else:
+        try:
+            t_path_seal = int(t_path_seal)  # Attempt conversion to integer
+            if t_path_seal > 0:
+                seal_neck_adjuster = (sealneckC / motorC) ** (5 ** 0.5)
+            else:
+                seal_neck_adjuster = (sealneckC / motorC) ** (2.5 ** 0.5)
+        except ValueError:
+            seal_neck_adjuster = 0  # Handle invalid integer input, if any
+
+    if sealneckI is None:
+        seal_loadfactor=0,
+    else:
+        seal_loadfactor = 1 + 1 / sealneckI
+
+    max_deflection=0,
+
+    total_I = 0
+
+    # Initialize arrays with values
+    MyArray_in_increment = [0] * 1002  # 1002 because the indexing seems to go up to 1001
+    MyArray_ft_increment = [0] * 1002
+    MyArray_inertia1 = [0] * 1002
+    MyArray_inertia2 = [0] * 1002  # Assuming motorI is a defined variable
+    MyArray_centroid = [0] * 1002  # Assuming motorC is a defined variable
+    MyArray_deflection = [0] * 1002
+    MyArray_load = [0] * 1002
+    MyArray_moment = [0] * 1002
+    MyArray_mod_1 = [1] * 1002
+    MyArray_mod_2 = [0] * 1002
+    MyArray_mod_3 = [0] * 1002
+    MyArray_mod_4 = [1] * 1002
+    MyArray_stress = [0] * 1002
+    MyArray_axis = [0] * 1002
+    MyArray_stress_wtadder = [0] * 1002
+    MyArray_seal_neck_stress_correction = [0] * 1002  # List of 1002 elements, all set to 0
+
+
+
+    # Check conditions based on the range of MyArray_ft_increment[2]
+
+    for i in range(1, 1002):
+        MyArray_seal_neck_stress_correction[i] = 0
+        # Perform calculations and conditional checks
+    for i in range(1, 1002):
+        MyArray_in_increment[i] = incrementor + MyArray_in_increment[i - 1]  # Assuming 'add' is a predefined variable
+        MyArray_ft_increment[i] = round(MyArray_in_increment[i] / 12, 2)
+
+
+        # Checking if MyArray_ft_increment[i] fits any of the conditions
+        #if isinstance(MyArray_inertia2[i], tuple):
+            #MyArray_inertia2[i] = float(MyArray_inertia2[i][0])  # Pick the first value if it's a tuple
+
+        if MyArray_ft_increment[i] < break1:
+            MyArray_inertia2[i] = float(motorI) if motorI is not None else 0
+        elif break1 <= MyArray_ft_increment[i] <= break1e and break2 > 0:
+            MyArray_inertia2[i] = float(motorneckI) if motorneckI is not None else 0
+        elif break1 <= MyArray_ft_increment[i] <= break1e and break2 == 0:
+            MyArray_inertia2[i] = float(sealneckI) if sealneckI is not None else 0
+        elif break1e < MyArray_ft_increment[i] < break2:
+            MyArray_inertia2[i] = float(motorI) if motorI is not None else 0
+        elif break2 <= MyArray_ft_increment[i] <= break2e:
+            MyArray_inertia2[i] = float(sealneckI) if sealneckI is not None else 0
+        elif break2e < MyArray_ft_increment[i] < break3:
+            MyArray_inertia2[i] = float(sealI) if sealI is not None else 0
+        elif break3 <= MyArray_ft_increment[i] <= break3e:
+            MyArray_inertia2[i] = float(sealneckI) if sealneckI is not None else 0
+            MyArray_seal_neck_stress_correction[i] = float(seal_neck_adjuster) if seal_neck_adjuster is not None else 0
+        elif break3e < MyArray_ft_increment[i] < break4:
+            MyArray_inertia2[i] = float(sealI) if sealI is not None else 0
+        elif break4 <= MyArray_ft_increment[i] <= break4e:
+            MyArray_inertia2[i] = float(intakeneckI) if intakeneckI is not None else 0
+        elif break4e < MyArray_ft_increment[i] < break5:
+            MyArray_inertia2[i] = float(intakeI) if intakeI is not None else 0
+        elif break5 <= MyArray_ft_increment[i] <= break5e:
+            MyArray_inertia2[i] = float(pumpneckI) if pumpneckI is not None else 0
+        elif break5e < MyArray_ft_increment[i] < break6:
+            MyArray_inertia2[i] = float(intakeI) if intakeI is not None else 0
+        elif break6 <= MyArray_ft_increment[i] <= break6e:
+            MyArray_inertia2[i] = float(pumpneckI) if pumpneckI is not None else 0
+        elif break6e < MyArray_ft_increment[i] < break7:
+            MyArray_inertia2[i] = float(pumpI) if pumpI is not None else 0
+        elif break7 <= MyArray_ft_increment[i] <= break7e:
+            MyArray_inertia2[i] = float(pumpneckI) if pumpneckI is not None else 0
+        elif break7e < MyArray_ft_increment[i] < break8:
+            MyArray_inertia2[i] = float(pumpI) if pumpI is not None else 0
+        elif break8 <= MyArray_ft_increment[i] <= break8e:
+            MyArray_inertia2[i] = float(pumpneckI) if pumpneckI is not None else 0
+        elif break8e < MyArray_ft_increment[i] < break9:
+            MyArray_inertia2[i] = float(pumpI) if pumpI is not None else 0
+        elif break9 <= MyArray_ft_increment[i] <= break9e:
+            MyArray_inertia2[i] = float(pumpneckI) if pumpneckI is not None else 0
+        elif break9e < MyArray_ft_increment[i] < break10:
+            MyArray_inertia2[i] = float(pumpI) if pumpI is not None else 0
+        elif break10 <= MyArray_ft_increment[i] <= break10e:
+            MyArray_inertia2[i] = float(pumpneckI) if pumpneckI is not None else 0
+        elif break10e < MyArray_ft_increment[i] < break11:
+            MyArray_inertia2[i] = float(pumpI) if pumpI is not None else 0
+        elif break11 <= MyArray_ft_increment[i] <= break11e:
+            MyArray_inertia2[i] = float(pumpneckI) if pumpneckI is not None else 0
+        elif MyArray_ft_increment[i] > break11e:
+            MyArray_inertia2[i] = float(pumpI) if pumpI is not None else 0
+
+
+
+        if motor_LT_weight is None or ext_wt is None or ext_wt == '':
+            wt1 = 0
+        else:
+            # Convert motor_LT_weight to float if it's a string
+            motor_LT_weight = float(motor_LT_weight) if isinstance(motor_LT_weight, str) else motor_LT_weight
+
+            # Convert ext_wt to integer (if it's not empty or None)
+            ext_wt = int(ext_wt) if ext_wt not in [None, ''] and isinstance(ext_wt, str) else ext_wt
+
+            # Now calculate wt1
+            wt1 = motor_LT_weight + ext_wt
+
+    for i in range(len(MyArray_ft_increment)):
+        # Only proceed if none of the required variables are None
+        if (motor_LT_weight is not None and motor_UT_weight is not None and seal1_weight is not None and seal_neck_area is not None and intake_neck_area is not None and pump_neck_area is not None and t_path_seal is not None):
+            seal_hsg_od = float(seal_hsg_od) if seal_hsg_od is not None else 0
+            seal_hsg_id = float(seal_hsg_id) if seal_hsg_id is not None else 0
+            ext_wt = float(ext_wt) if ext_wt not in [None, ""] else 0
+            load_reduction = 1
+            if isinstance(t_path_seal, str) and t_path_seal.strip() == "":
+                # Optionally, you can assign a default value, e.g., 0
+                angle = 0
+            else:
+                try:
+                    # If t_path_seal is not a string, we convert it to string for safety
+                    t_path_seal_str = str(t_path_seal)
+                    angle = float(t_path_seal_str)
+                    # Convert to radians
+                    angle_radians = math.radians(angle)
+                    # Calculate the load reduction
+                    load_reduction = math.cos(angle_radians) ** 2.95
+
+                except ValueError:
+                    # If there's an error in conversion, set load_reduction to 0
+                    load_reduction = 1
+
+            seal_hsg_area = 3.14159 * ((seal_hsg_od) ** 2 - (seal_hsg_id) ** 2) / 4
+
+            # Run your calculations
+            ft_increment = MyArray_ft_increment[i]
+
+            if ft_increment < break1:  # (1)
+                MyArray_stress_wtadder[i] = 0
+
+            elif break1 <= ft_increment <= break1e and break2 > 0:  # (2)
+                wt1 = motor_LT_weight + ext_wt
+                MyArray_stress_wtadder[i] = wt1 / motor_neck_area * load_reduction
+
+            elif break1 <= ft_increment <= break1e and break2 == 0:  # (2)
+                wt2 = motor_LT_weight + ext_wt
+                MyArray_stress_wtadder[i] = wt2 / seal_neck_area * load_reduction
+
+            elif break1e < ft_increment < break2:  # (3)
+                MyArray_stress_wtadder[i] = 0
+
+            elif break2 <= ft_increment <= break2e:  # (4)
+                wt3 = motor_LT_weight + motor_UT_weight + ext_wt
+                MyArray_stress_wtadder[i] = wt3 / seal_neck_area * load_reduction
+
+            elif break2e < ft_increment < break3:
+                wt3 = motor_LT_weight + motor_UT_weight + ext_wt# (5) Add loading to seal housing for external load force
+                MyArray_stress_wtadder[i] = (wt3 + ext_wt) / seal_hsg_area * load_reduction
+
+            elif break3 <= ft_increment <= break3e:  # (6)
+                wt4 = motor_LT_weight + motor_UT_weight + seal1_weight + ext_wt
+                MyArray_stress_wtadder[i] = wt4 / seal_neck_area * load_reduction
+
+            elif break3e < ft_increment < break4:  # (7)
+                wt4 = motor_LT_weight + motor_UT_weight + seal1_weight + ext_wt
+                MyArray_stress_wtadder[i] = (wt4 + ext_wt) / seal_hsg_area * load_reduction
+
+            elif break4 <= ft_increment <= break4e:  # (8)
+                wt5 = motor_LT_weight + motor_UT_weight + seal1_weight + seal2_weight + ext_wt
+                MyArray_stress_wtadder[i] = wt5 / intake_neck_area * load_reduction
+
+            elif break4e < ft_increment < break5:  # (9)
+                wt5 = motor_LT_weight + motor_UT_weight + seal1_weight + seal2_weight + ext_wt
+                MyArray_stress_wtadder[i] = (wt5 + ext_wt) / seal_hsg_area * load_reduction
+
+            elif break5 <= ft_increment <= break5e:  # (10)
+                wt6 = motor_LT_weight + motor_UT_weight + seal1_weight + seal2_weight + gassep1_weight + ext_wt
+                MyArray_stress_wtadder[i] = wt6 / pump_neck_area * load_reduction
+
+            elif break5e < ft_increment < break6:  # (11)
+                wt6 = motor_LT_weight + motor_UT_weight + seal1_weight + seal2_weight + gassep1_weight + ext_wt
+                MyArray_stress_wtadder[i] = (wt6 + ext_wt) / seal_hsg_area * load_reduction
+
+            elif break6 <= ft_increment <= break6e:  # (12)
+
+                wt7 = motor_LT_weight + motor_UT_weight + seal1_weight + seal2_weight + gassep1_weight + gassep2_weight + ext_wt
+                MyArray_stress_wtadder[i] = wt7 / pump_neck_area * load_reduction
+
+            elif break6e < ft_increment < break7:  # (13)
+                MyArray_stress_wtadder[i] = 0
+
+            elif break7 <= ft_increment <= break7e:  # (14)
+                wt8 = motor_LT_weight + motor_UT_weight + seal1_weight + seal2_weight + gassep1_weight + gassep2_weight + pump1_weight + ext_wt
+                MyArray_stress_wtadder[i] = wt8 / pump_neck_area * load_reduction
+
+            elif break7e < ft_increment < break8:  # (15)
+                MyArray_stress_wtadder[i] = 0
+
+            elif break8 <= ft_increment <= break8e:  # (16)
+                wt9 = motor_LT_weight + motor_UT_weight + seal1_weight + seal2_weight + gassep1_weight + gassep2_weight + pump1_weight + pump2_weight + ext_wt
+                MyArray_stress_wtadder[i] = wt9 / pump_neck_area * load_reduction
+
+            elif break8e < ft_increment < break9:  # (17)
+                MyArray_stress_wtadder[i] = 0
+
+            elif break9 <= ft_increment <= break9e:  # (18)
+                wt10 = motor_LT_weight + motor_UT_weight + seal1_weight + seal2_weight + gassep1_weight + gassep2_weight + pump1_weight + pump2_weight + pump3_weight + ext_wt
+                MyArray_stress_wtadder[i] = wt10 / pump_neck_area * load_reduction
+
+            elif break9e < ft_increment < break10:  # (19)
+                MyArray_stress_wtadder[i] = 0
+
+            elif break10 <= ft_increment <= break10e:  # (20)
+                wt11 = motor_LT_weight + motor_UT_weight + seal1_weight + seal2_weight + gassep1_weight + gassep2_weight + pump1_weight + pump2_weight + pump3_weight + pump4_weight + ext_wt
+                MyArray_stress_wtadder[i] = wt11 / pump_neck_area * load_reduction
+
+            elif break10 < ft_increment <= break10e:  # (20)
+                wt12 = motor_LT_weight + motor_UT_weight + seal1_weight + seal2_weight + gassep1_weight + gassep2_weight + pump1_weight + pump2_weight + pump3_weight + pump4_weight + pump5_weight + ext_wt
+                MyArray_stress_wtadder[i] = wt12 / pump_neck_area * load_reduction
+
+            elif ft_increment > break10e:  # (21)
+                MyArray_stress_wtadder[i] = 0
+                wt13 = motor_LT_weight + motor_UT_weight + seal1_weight + seal2_weight + gassep1_weight + gassep2_weight + pump1_weight + pump2_weight + pump3_weight + pump4_weight + pump5_weight + pump6_weight + ext_wt
+                MyArray_stress_wtadder[i] = wt13 / pump_neck_area * load_reduction
+
+    for i in range(len(MyArray_inertia2)):
+        # First set of conditions for MyArray_inertia1 based on MyArray_inertia2
+        if MyArray_inertia2[i] == motorI:
+            MyArray_inertia1[i] = motorI
+        elif MyArray_inertia2[i] == motorneckI:
+            MyArray_inertia1[i] = motorI
+        elif MyArray_inertia2[i] == sealneckI:
+            MyArray_inertia1[i] = sealI
+        elif MyArray_inertia2[i] == sealI:
+            MyArray_inertia1[i] = sealI
+        elif MyArray_inertia2[i] == intakeneckI:
+            MyArray_inertia1[i] = pumpI
+        elif MyArray_inertia2[i] == intakeI:
+            MyArray_inertia1[i] = pumpI
+        else:
+            MyArray_inertia1[i] = pumpI
+
+        # Second set of conditions for MyArray_centroid based on MyArray_inertia2
+        if MyArray_inertia2[i] == motorI:
+            MyArray_centroid[i] = motorC
+        elif MyArray_inertia2[i] == motorneckI:
+            MyArray_centroid[i] = motorneckC
+        elif MyArray_inertia2[i] == sealI:
+            MyArray_centroid[i] = sealC
+        elif MyArray_inertia2[i] == sealneckI:
+            MyArray_centroid[i] = sealneckC
+        elif MyArray_inertia2[i] == intakeI:
+            MyArray_centroid[i] = intakeC
+        elif MyArray_inertia2[i] == intakeneckI:
+            MyArray_centroid[i] = intakeneckC
+        elif MyArray_inertia2[i] == pumpI:
+            MyArray_centroid[i] = pumpC
+        else:
+            MyArray_centroid[i] = pumpneckC
+
+
+    for i in range(len(MyArray_inertia2)):  # Adjust the loop range if needed
+        total_I += MyArray_inertia2[i]
+
+
+    average_I = total_I / 1000
+
+
+    if t_path == "":
+        t_path_new=0
+    else:
+        t_path_new = float(t_path)/100
+
+    if t_path_new > 0:
+        # Directly convert to float or set default values without checking for None or ""
+        t_path_new = float(t_path_new) if t_path_new is not None else 0
+        average_I = float(average_I) if average_I is not None else 0
+        modulus = float(modulus) if modulus is not None else 0
+        deflection = float(deflection) if deflection is not None else 0
+        bendingdeviation = float(bendingdeviation) if bendingdeviation is not None else 0
+        seal1_length = float(seal1_length) if seal1_length is not None else 0
+        motor_OD = float(motor_OD) if motor_OD is not None else 0
+        seal_hsg_od = float(seal_hsg_od) if seal_hsg_od is not None else 0
+        seal1_weight = float(seal1_weight) if seal1_weight is not None else 0
+        sealI = float(seal1_I) if sealI is not None else 0
+        sealneckC = float(sealneckC) if sealneckC is not None else 0
+        motorC = float(motorC) if motorC is not None else 0
+        if orientation and orientation != "":
+            # Convert to float
+            orientation = float(orientation)
+        else:
+            # Set default value (0 or any other value that makes sense for your use case)
+            orientation = 0
+
+        # Proceed with the load calculation
+        if total_length in [None, 0]:
+            load=0
+        else:
+            load = (average_I * 384 * modulus * (deflection - (bendingdeviation * 2 - bendingdeviation * 2 * t_path_new))) / 5 / (total_length * 12) ** 4
+
+        # Orientation modifier based on user input (default to 1 if not provided)
+        if orientation == 0 or orientation is None:
+            orientation_modifier = 1
+        else:
+            orientation_modifier = math.cos(2 * math.pi / 360 * orientation)
+
+        if angle == 0 or angle is None:
+            # Load modifier based on some angle (set to 0 for now, replace with real angle if necessary)
+            load_modifier = math.sin(2 * math.pi / 360 * angle)
+        else:
+            load_modifier=1
+
+        # DLS Deflection and related calculations
+        DLS_deflection = 2.6 * (seal1_length * 2 / 100) ** 2 * dls_new
+        required_seal_deflection = (motor_OD / 2 - seal_hsg_od / 2) + DLS_deflection
+
+        if seal1_length in [None, 0]:
+            uniform_load_w = 0
+            load_req_for_deflect = 0
+        else:
+            uniform_load_w = seal1_weight / (seal1_length * 12)
+            load_req_for_deflect = (required_seal_deflection * 24 * modulus * sealI / (seal1_length * 2 * 12) ** 4) * load_modifier
+        Mmax = (load_req_for_deflect * (seal1_length * 2 * 12) ** 2) / 3
+        #seal_neck_stress = 0
+        if seal1_I not in [None, 0]:
+            seal_neck_stress=0
+        else:
+            # Seal neck stress calculation
+            seal_neck_stress = Mmax * sealneckC / sealI * orientation_modifier
+        #seal_neck_stress = 0
+        m_hsg = 0
+        Seal_Hsg_Stress_Mod = 0
+        #print(f'Length seal-{seal1_length}')
+
+        if sealI != 0 and seal1_length !=0:  # Check if neither sealI nor seal1_length is zero
+            m_hsg = uniform_load_w / 6 * ((seal1_length * 2 * 12) ** 2) / 4
+            Seal_Hsg_Stress_Mod = m_hsg * seal_hsg_od / 2 / sealI
+            #print(f'it worked={Seal_Hsg_Stress_Mod}')
+        else:
+            m_hsg = 0
+            Seal_Hsg_Stress_Mod = 0  # Set to 0 or handle as needed
+
+
+        # Return the results (load and seal neck stress)
+        #return f"Calculated Load: {load}, Seal Neck Stress: {seal_neck_stress}"
+
+    elif t_path_new == 0:
+        #print(f'tpathnew= 0')
+        # Directly convert to float or set default values without checking for None or ""
+        t_path_new = float(t_path_new) if t_path_new is not None else 0
+        average_I = float(average_I) if average_I is not None else 0
+        modulus = float(modulus) if modulus is not None else 0
+        deflection = float(deflection) if deflection is not None else 0
+        bendingdeviation = float(bendingdeviation) if bendingdeviation is not None else 0
+        total_length = float(total_length) if total_length is not None else 0
+        seal1_length = float(seal1_length) if seal1_length is not None else 0
+        motor_OD = float(motor_OD) if motor_OD is not None else 0
+        seal_hsg_od = float(seal_hsg_od) if seal_hsg_od is not None else 0
+        seal1_weight = float(seal1_weight) if seal1_weight is not None else 0
+        if orientation and orientation != "":
+            # Convert to float
+            orientation = float(orientation)
+        else:
+            # Set default value (0 or any other value that makes sense for your use case)
+            orientation = 0
+        try:
+            dls_new = float(dls_new)
+        except NameError:
+            dls_new = 0  # Handle case where dls_new is not defined
+        sealI = float(sealI) if sealI is not None else 0
+        sealneckC = float(sealneckC) if sealneckC is not None else 0
+        motorC = float(motorC) if motorC is not None else 0
+
+        # Proceed with the load calculation for t_path_new == 0
+        if total_length in [None, 0]:
+            load = 0  # Set load to 0 if total_length is invalid
+        else:
+            load = (average_I * 384 * modulus * (deflection - bendingdeviation * 2)) / 5 / (total_length * 12) ** 4
+
+        orientation_modifier = 1
+        load_modifier = 1
+
+        DLS_deflection = 2.6 * (seal1_length * 2 / 100) ** 2 * dls_new
+        required_seal_deflection = (motor_OD / 2 - seal_hsg_od / 2) + DLS_deflection
+        if seal1_length in [None, 0]:
+            uniform_load_w=0
+            load_req_for_deflect=0
+        else:
+            uniform_load_w = seal1_weight / (seal1_length * 12)
+            load_req_for_deflect = (required_seal_deflection * 24 * modulus * sealI / (seal1_length * 2 * 12) ** 4) * load_modifier
+        Mmax = (load_req_for_deflect * (seal1_length * 2 * 12) ** 2) / 3
+        m_hsg = 0
+        Seal_Hsg_Stress_Mod = 0
+        seal_neck_stress = 0
+
+
+
+
+
+    MyArray_pipe_moment=[0]*1002
+    if pump2 is None:
+        for i in range(1,1002):  # In Python, ranges are exclusive at the end, so range(1, 1002) gives us the same result as 1 To 1001 in VBA
+            if MyArray_ft_increment[i] >= break5:
+                MyArray_pipe_moment[i] = tubing_moment_increment + MyArray_pipe_moment[i - 1]
+            else:
+                MyArray_pipe_moment[i] = 0
+
+    elif pump3 is None and pump2 is not None:
+        for i in range(2, 1002):
+            if break5 <= MyArray_ft_increment[i] < break6:
+                MyArray_pipe_moment[i] = tubing_moment_increment + MyArray_pipe_moment[i - 1] * 0.75
+            elif MyArray_ft_increment[i] >= break6:
+                MyArray_pipe_moment[i] = tubing_moment_increment + MyArray_pipe_moment[i - 1] * 1
+
+    elif pump4 is None and pump3 is not None and pump2 is not None:
+        for i in range(2, 1002):
+            if break5 <= MyArray_ft_increment[i] < break6:
+                MyArray_pipe_moment[i] = tubing_moment_increment + MyArray_pipe_moment[i - 1] * 0.5
+            elif break6 <= MyArray_ft_increment[i] < break7:
+                MyArray_pipe_moment[i] = tubing_moment_increment + MyArray_pipe_moment[i - 1] * 0.75
+            elif MyArray_ft_increment[i] >= break7:
+                MyArray_pipe_moment[i] = tubing_moment_increment + MyArray_pipe_moment[i - 1] * 1
+
+    elif pump5 is None and pump4 is not None and pump3 is not None and pump2 is not None:
+        for i in range(2, 1002):
+            if break5 <= MyArray_ft_increment[i] < break6:
+                MyArray_pipe_moment[i] = tubing_moment_increment + MyArray_pipe_moment[i - 1] * 0.3
+            elif break6 <= MyArray_ft_increment[i] < break7:
+                MyArray_pipe_moment[i] = tubing_moment_increment + MyArray_pipe_moment[i - 1] * 0.6
+            elif break7 <= MyArray_ft_increment[i] < break8:
+                MyArray_pipe_moment[i] = tubing_moment_increment + MyArray_pipe_moment[i - 1] * 0.8
+            elif MyArray_ft_increment[i] >= break8:
+                MyArray_pipe_moment[i] = tubing_moment_increment + MyArray_pipe_moment[i - 1] * 1
+
+    elif pump6 is None and pump5 is not None and pump4 is not None and pump3 is not None and pump2 is not None:
+        for i in range(2, 1002):
+            if break5 <= MyArray_ft_increment[i] < break6:
+                MyArray_pipe_moment[i] = tubing_moment_increment + MyArray_pipe_moment[i - 1] * 0.3
+            elif break6 <= MyArray_ft_increment[i] < break7:
+                MyArray_pipe_moment[i] = tubing_moment_increment + MyArray_pipe_moment[i - 1] * 0.6
+            elif break7 <= MyArray_ft_increment[i] < break8:
+                MyArray_pipe_moment[i] = tubing_moment_increment + MyArray_pipe_moment[i - 1] * 0.8
+            elif break8 <= MyArray_ft_increment[i] < break9:
+                MyArray_pipe_moment[i] = tubing_moment_increment + MyArray_pipe_moment[i - 1] * 0.8
+            elif MyArray_ft_increment[i] >= break9:
+                MyArray_pipe_moment[i] = tubing_moment_increment + MyArray_pipe_moment[i - 1] * 1
+
+    elif pump6 is not None:
+        for i in range(2, 1002):
+            if break5 <= MyArray_ft_increment[i] < break6:
+                MyArray_pipe_moment[i] = tubing_moment_increment + MyArray_pipe_moment[i - 1] * 0.5
+            elif break6 <= MyArray_ft_increment[i] < break7:
+                MyArray_pipe_moment[i] = tubing_moment_increment + MyArray_pipe_moment[i - 1] * 0.8
+            elif break7 <= MyArray_ft_increment[i] < break8:
+                MyArray_pipe_moment[i] = tubing_moment_increment + MyArray_pipe_moment[i - 1] * 0.9
+            elif break8 <= MyArray_ft_increment[i] < break9:
+                MyArray_pipe_moment[i] = tubing_moment_increment + MyArray_pipe_moment[i - 1] * 0.9
+            elif MyArray_ft_increment[i] >= break9:
+                MyArray_pipe_moment[i] = tubing_moment_increment + MyArray_pipe_moment[i - 1] * 1
+
+    if total_length != 0:  # Check if total_length is not 0
+
+        if motor1 is not None and motor2 is not None:
+            # Initialize MyArray_pipe_moment (assuming its size is 1001 and initialized to some default values)
+            MyArray_pipe_moment = [0] * 1002
+            #tubing_moment_2 = 1  # Define tubing_moment_2 within this block (replace `some_value_2` with actual value)
+            MyArray_pipe_moment[0] = tubing_moment_2
+
+            stinger_moment_length = (motor1 + motor2) / (total_length / 1000)
+            stinger_moment_increment = tubing_moment_2 / stinger_moment_length
+
+            for i in range(1, 1002):
+                if MyArray_ft_increment[i] <= break2:
+                    MyArray_pipe_moment[i] = MyArray_pipe_moment[i - 1] - stinger_moment_increment
+
+        elif motor1 is not None and motor2 is None:
+            # Initialize MyArray_pipe_moment (assuming its size is 1001 and initialized to some default values)
+            MyArray_pipe_moment = [0] * 1002
+            #tubing_moment_2 = 1  # Define tubing_moment_2 within this block (replace `some_value_2` with actual value)
+            MyArray_pipe_moment[0] = tubing_moment_2
+
+            stinger_moment_length = (motor1) / (total_length / 1000)
+            stinger_moment_increment = tubing_moment_2 / stinger_moment_length
+
+            for i in range(1, 1002):  # tubing bending moment effect on the bottom of the ESP string
+                if MyArray_ft_increment[i] <= break1:  # defines the point of tubing bending moment applied to string which is to bottom motor
+                    MyArray_pipe_moment[i] = MyArray_pipe_moment[i - 1] - stinger_moment_increment
+
+    else:
+        # Set values to 0 when total_length is 0
+        MyArray_pipe_moment = [0] * 1002
+        tubing_moment_2 = 0
+        stinger_moment_length = 0
+        stinger_moment_increment = 0
+
+    max_deflection = 0  # For finding the minimum deflection
+    max_stress = 0
+    #stress_concentration_motor = 1
+    #stress_concentration_motor_A = 1
+    #seal_loadfactor = 1
+    #seal_base_stress_modifier = 0.85
+    #stress_reduction = 1
+    #seal_neck_stress = 1
+    seal_neck_stress_correction = [0] * 1002
+
+    # Iterate through the arrays (starting at index 1 to 1001, assuming zero-based indexing in Python)
+    for i in range(1, 1002):
+        if total_length in [None, 0]:
+            load = 0
+        else:
+            load = (average_I * 384 * modulus * (deflection - (bendingdeviation * 2 - bendingdeviation * 2 * t_path_new))) / 5 / (total_length * 12) ** 4
+            # Deflection calculation
+            MyArray_deflection[i] = load * MyArray_in_increment[i] / (24 * modulus * average_I) * ((total_length * 12) ** 3 - (2 * total_length * 12) * (MyArray_in_increment[i]) ** 2 + (MyArray_in_increment[i]) ** 3) * -1
+
+        # Load calculation
+        if pump2 is not None:
+            # Iterate through the array and perform the calculations
+            for i in range(1,len(MyArray_inertia1)):  # Assuming you want to start at index 1 to avoid out-of-range errors
+                # Load calculation
+                if MyArray_inertia1[i] == sealI and MyArray_inertia2[i] == sealneckI:
+                    MyArray_load[i] = (MyArray_inertia1[i] / average_I * load) * seal_loadfactor
+                else:
+                    MyArray_load[i] = (MyArray_inertia1[i] / average_I) * load
+
+                # Moment calculation
+                if MyArray_inertia2[i - 1] == motorI and MyArray_inertia2[i] == motorneckI:
+                    MyArray_moment[i] = ((MyArray_load[i] * MyArray_in_increment[i] / 2 * (
+                                total_length * 12 - MyArray_in_increment[i]) / stress_concentration_2)) + MyArray_pipe_moment[i]
+                else:
+                    MyArray_moment[i] = ((MyArray_load[i] * MyArray_in_increment[i] / 2 * (total_length * 12 - MyArray_in_increment[i]))) + MyArray_pipe_moment[i]
+
+        # Track the minimum deflection
+        for i in range(1, 1002):
+            if max_deflection > MyArray_deflection[i]:
+                max_deflection = MyArray_deflection[i]
+
+    # Assuming you need to store the max_deflection result somewhere
+    print(max_deflection * -1)
+    MyArray_Stress_orientation_modifier=[0]*1002
+
+
+    # Second loop for calculating Stress Orientation Modifier
+    for i in range(1, 1002):
+        # Check if sealneckC, seal_neck_stress, and Seal_Hsg_Stress_Mod are not None
+        if seal1 is not None:
+            if MyArray_centroid[i] == sealneckC:
+                MyArray_Stress_orientation_modifier[i] = seal_neck_stress * (1 - MyArray_seal_neck_stress_correction[i])
+            elif MyArray_centroid[i] == sealC:
+                MyArray_Stress_orientation_modifier[i] = Seal_Hsg_Stress_Mod * (1 - MyArray_seal_neck_stress_correction[i])
+        else:
+            # Handle the case where the required values are None (if needed)
+            MyArray_Stress_orientation_modifier[i] = 0
+
+    # Third loop for Mod 1, Mod 2, Mod 3, and Mod 4 calculations
+    # Iterate over the valid range of indices (1 to len(MyArray_centroid) - 2)
+    for i in range(1, len(MyArray_centroid) - 1):
+        if MyArray_centroid[i] == motorneckC and MyArray_centroid[i - 1] == motorC:
+            MyArray_mod_1[i] = stress_concentration_motor
+        elif MyArray_centroid[i] == motorneckC and MyArray_centroid[i + 1] == motorC:
+            MyArray_mod_1[i] = stress_concentration_motor_A
+        elif MyArray_centroid[i] == sealneckC and MyArray_centroid[i - 1] == motorC:
+            MyArray_mod_1[i] = stress_concentration_motor
+        elif MyArray_centroid[i] == sealneckC and MyArray_centroid[i + 1] == sealC:
+            MyArray_mod_1[i] = stress_concentration_motor_A
+        elif MyArray_centroid[i] == sealneckC and MyArray_centroid[i - 1] == sealC:
+            MyArray_mod_1[i] = stress_concentration_motor
+        elif MyArray_centroid[i] == intakeneckC and MyArray_centroid[i - 1] == sealC:
+            MyArray_mod_1[i] = stress_concentration_1
+        elif MyArray_centroid[i] == intakeneckC and MyArray_centroid[i + 1] == intakeC:
+            MyArray_mod_1[i] = stress_concentration_2
+        elif MyArray_centroid[i] == intakeneckC and MyArray_centroid[i - 1] == intakeC:
+            MyArray_mod_1[i] = stress_concentration_1
+        elif MyArray_centroid[i] == pumpneckC and MyArray_centroid[i - 1] == intakeC:
+            MyArray_mod_1[i] = stress_concentration_1
+        elif MyArray_centroid[i] == pumpneckC and MyArray_centroid[i + 1] == pumpC:
+            MyArray_mod_1[i] = stress_concentration_2
+        else:
+            MyArray_mod_1[i] = 1
+
+        if MyArray_centroid[i] == sealneckC and MyArray_centroid[i - 1] == motorC:
+            MyArray_mod_2[i] = 1
+        else:
+            MyArray_mod_2[i] = 0
+
+        if MyArray_inertia2[i - 1] == motorI and MyArray_inertia2[i] == motorneckI:
+            MyArray_mod_3[i] = 1.5
+        else:
+            MyArray_mod_3[i] = 0
+
+        if MyArray_inertia2[i - 1] == motorI and MyArray_inertia2[i] == motorneckI:
+            MyArray_mod_4[i] = seal_base_stress_modifier
+            #print(f'Mod4 worked {MyArray_mod_4[i]}')
+        else:
+            MyArray_mod_4[i] = 1
+
+    max3_value = max(MyArray_mod_3)
+    print(f"Maximum value of MyArray_mod_3: {max3_value}")
+    min4_value = min(MyArray_mod_4)
+    print(f"Maximum value of MyArray_mod_4: {min4_value}")
+
+    # Final loop for stress calculation
+    if pump2 is not None:
+        for i in range(1, 1002):  # Loop over the range 1 to 1000 (inclusive)
+            if MyArray_mod_2[i] == 1:
+                #print("mod2")
+                MyArray_stress[i] = ((MyArray_moment[i] * MyArray_centroid[i] / MyArray_inertia2[i] * MyArray_mod_1[i] * seal_base_stress_modifier) / MyArray_mod_4[i]) + MyArray_stress_wtadder[i] +  MyArray_Stress_orientation_modifier[i]
+            elif MyArray_mod_3[i] == 1.5:
+                #print("mod3")
+                MyArray_stress[i] = ((MyArray_moment[i] * MyArray_centroid[i] / MyArray_inertia2[i] * MyArray_mod_1[i] / stress_reduction) / MyArray_mod_4[i]) + MyArray_stress_wtadder[i] + MyArray_Stress_orientation_modifier[i]
+            else:
+                 #Print the values of the arrays for the specific index i
+                MyArray_stress[i] = ((MyArray_moment[i] * MyArray_centroid[i] / MyArray_inertia2[i] * MyArray_mod_1[i]) / MyArray_mod_4[i]) + MyArray_stress_wtadder[i] + MyArray_Stress_orientation_modifier[i]
+
+    print(f'seal_base_stress_modifier={seal_base_stress_modifier}')
+    print(f'stress Reduction={stress_reduction}')
+    # Initialize the max_stress variable
+    max_stress = 0
+    #print(MyArray_stress)
+    # Loop to find the maximum stress in MyArray_stress
+    for i in range(1, 1002):  # Adjusting for Python's zero-based index
+        if MyArray_stress[i] > max_stress:
+            max_stress= MyArray_stress[i]
+            #print (max_stress)
+    max_stress=round(max_stress)
+    max_stress = "{:,}".format(max_stress)
+    # Assuming you want to print or store the max_stress
+    #print(max_stress)
+
+    # Now loop through MyArray_ft_increment in steps of 20 and store in MyArray_axis
+    for i in range(0, 1002, 20):  # 0, 1001, and step 20
+        MyArray_axis[i] = MyArray_ft_increment[i]
+
+    if isinstance(n_clicks, list):
+        n_clicks = n_clicks[0]  # Ensure we get the integer value
+
+    #print(f"n_clicks: {n_clicks}")
+    #print(MyArray_ft_increment)
+    #print(MyArray_stress)
+
+    if n_clicks > 0:
+        #print("it worked")
+
+        fig = go.Figure(
+            data=[
+                go.Scatter(
+                    x=MyArray_ft_increment,
+                    y=MyArray_stress,
+                    mode="lines+markers",
+                    name="Stress",
+                    line=dict(color="red")
+                ),
+                go.Scatter(
+                    x=MyArray_ft_increment,
+                    y=MyArray_deflection,
+                    mode="lines+markers",
+                    name="Deflection",
+                    line=dict(color="blue"),
+                    yaxis="y2"  # Specify that this trace should use the second y-axis
+                )
+            ],
+            layout=go.Layout(
+                title="Max Stress and Deflection Plot",
+                xaxis=dict(title="Equipment String Length (ft)"),
+                yaxis=dict(title="Bending Stress (psi)"),  # Primary y-axis
+                yaxis2=dict(
+                    title="Deflection (in)",  # Secondary y-axis title
+                    overlaying="y",  # Overlay this axis on the primary y-axis
+                    side="right"  # Place the second y-axis on the right
+                ),
+                annotations=[  # Add annotation for max stress above the plot
+                    dict(
+                        x=0.5,  # Position annotation at the center of the plot (adjust as necessary)
+                        y=1.2,  # Position above the plot (y = 1.1 is above the plot)
+                        xref="paper",  # Use relative coordinates for x (0 to 1 across the plot width)
+                        yref="paper",  # Use relative coordinates for y (0 to 1 across the plot height)
+                        text=f"Max Stress: {max_stress} psi<br>Dog Leg Severity: {dls} deg/100ft",  # Text for the annotation
+                        showarrow=False,  # Don't show an arrow
+                        font=dict(size=14, color="black"),  # Font settings for the annotation
+                        bgcolor="rgba(255, 255, 255, 0.7)",  # Background color for the text box
+                        borderpad=4  # Padding around the text box
+                    )
+                ]
+            )
+        )
+
+
+        return fig  # Return two separate figures for stress/deflection and clearance (circles)
+    else:
+        return go.Figure() # Return empty figures when no button click has occurred
     if n_clicks > 0:
         ##print("it worked")
         ##print(f"Max Stress: {max_stress}")
