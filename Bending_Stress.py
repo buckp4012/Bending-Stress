@@ -1103,7 +1103,7 @@ def handle_selections(motor_equipment, motor1, motor2, seal_equipment, seal1, se
         motor_LT_length = 0
         motor_LT_weight = 0
 #########################################################
-        if motor2 is not None and motor2 in motor_configurations[motor_equipment]:
+    if motor2 is not None and motor2 in motor_configurations[motor_equipment]:
         motor2_data = motor_configurations[motor_equipment][motor2]
         motor_UT_length = motor2_data["length"]
         motor_UT_weight = motor2_data["weight"]
