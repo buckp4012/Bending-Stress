@@ -1260,7 +1260,7 @@ def handle_selections(motor_equipment, motor1, motor2, seal_equipment, seal1, se
 
     if seal_equipment is not None:
         seal1_I = sealI  # Assign the correct moment of inertia
-        print(f'Seal I={seal1_I}')
+        #print(f'Seal I={seal1_I}')
         if seal2 != "None":  # Check if seal2 is not "None"
             seal2_I = sealI  # Assign the second seal's moment of inertia
         else:
@@ -1420,7 +1420,7 @@ def handle_selections(motor_equipment, motor1, motor2, seal_equipment, seal1, se
     casing_id_value = casing_id_value if casing_id_value is not None else 0
     motor_OD = motor_OD if motor_OD is not None else 0
     pump_OD = pump_OD if pump_OD is not None else 0
-    print(casing_id_value)
+    #print(casing_id_value)
 
     if casing_id_value:
         deviationcal = ((casing_id_value - motor_OD) + (casing_id_value - pump_OD)) / 2
@@ -1643,10 +1643,10 @@ def handle_selections(motor_equipment, motor1, motor2, seal_equipment, seal1, se
 
 
     if n_clicks > 0:
-        #print("it worked")
-        #print(f"Max Stress: {max_stress}")
-        #print(f"Dog Leg Severity: {dls}")
-        #print(f"Data points: {len(MyArray_ft_increment)}")
+        ##print("it worked")
+        ##print(f"Max Stress: {max_stress}")
+        ##print(f"Dog Leg Severity: {dls}")
+        ##print(f"Data points: {len(MyArray_ft_increment)}")
 
         fig = go.Figure(
             data=[
@@ -1750,13 +1750,13 @@ def update_clearance_plot(n_clicks, motor_equipment, seal_equipment, gassep_equi
         gassep_y = [gassep_radius * math.sin(t) for t in theta]  # Y points of motor circle with updated radius
 
         if pump_equipment == "401":
-            #print("ohno")
+            ##print("ohno")
             pump_final = "400"
         else:
             pump_final = pump_equipment
 
         pump_equipment2 = float(pump_final)
-        #print(f'pump={pump_equipment2}')
+        ##print(f'pump={pump_equipment2}')
         pump_radius = pump_equipment2 / 200  # Assuming seal_selection is in diameter, divide by 200 for radius
         pump_x = [pump_radius * math.cos(t) for t in theta]  # X points of motor circle with updated radius
         pump_y = [pump_radius * math.sin(t) for t in theta]  # Y points of motor circle with updated radius
@@ -1789,10 +1789,10 @@ def update_clearance_plot(n_clicks, motor_equipment, seal_equipment, gassep_equi
         motor_clearance=casing_id_value-(motor_radius*2)
         mle_equipment= casing_id_value-(selected_radius*2)-0.615
         mle_motor = casing_id_value - (motor_radius * 2) - 0.615 / 2
-        #print(casing_id_value)
-        #print(mle_equipment)
-        #print(mle_motor)
-        #print(mle_clearance)
+        ##print(casing_id_value)
+        ##print(mle_equipment)
+        ##print(mle_motor)
+        ##print(mle_clearance)
         a = .65  # Half the width (1 wide)
         b = 0.3075  # Half the height (0.615 tall)
 
