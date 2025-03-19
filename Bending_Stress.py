@@ -1103,7 +1103,542 @@ def handle_selections(motor_equipment, motor1, motor2, seal_equipment, seal1, se
         motor_LT_length = 0
         motor_LT_weight = 0
 #########################################################
+        if motor2 is not None and motor2 in motor_configurations[motor_equipment]:
+        motor2_data = motor_configurations[motor_equipment][motor2]
+        motor_UT_length = motor2_data["length"]
+        motor_UT_weight = motor2_data["weight"]
 
+    else:
+        motor_UT_length = 0
+        motor_UT_weight = 0
+
+
+    seal_equipment = int(seal_equipment) if seal_equipment is not None else None
+    seal1_length, seal1_weight = 0, 0
+    seal2_length, seal2_weight = 0, 0
+
+    # Check if equipment is selected and convert it to integer
+    if seal1 is not None and seal1 != "None" and seal1 in [seal['label'] for seal in
+                                                           seal_configurations.get(seal_equipment, [])]:
+        seal1_data = next(seal for seal in seal_configurations[seal_equipment] if seal['label'] == seal1)
+        seal1_length = seal1_data["length"]
+        seal1_weight = seal1_data["weight"]
+
+    else:
+        seal1_length, seal1_weight = 0, 0
+
+
+    # Similarly, for motor2
+    if seal2 is not None and seal2 != "None" and seal2 in [seal['label'] for seal in
+                                                           seal_configurations.get(seal_equipment, [])]:
+        seal2_data = next(seal for seal in seal_configurations[seal_equipment] if seal['label'] == seal2)
+        seal2_length = seal2_data["length"]
+        seal2_weight = seal2_data["weight"]
+
+    else:
+        seal2_length, seal2_weight = 0, 0
+
+
+
+    gassep_equipment = int(gassep_equipment) if gassep_equipment is not None else None
+    gassep1_length, gassep1_weight = 0, 0
+    gassep2_length, gassep2_weight = 0, 0
+
+    # Check if equipment is selected and convert it to integer
+    if gassep1 is not None and gassep1 != "None" and gassep1 in [gassep['label'] for gassep in
+                                                                 gas_sep_LT_configurations.get(gassep_equipment, [])]:
+        gassep1_data = next(gassep for gassep in gas_sep_LT_configurations[gassep_equipment] if gassep['label'] == gassep1)
+        gassep1_length = gassep1_data["length"]
+        gassep1_weight = gassep1_data["weight"]
+
+    else:
+        gassep1_length, gassep1_weight = 0, 0
+
+
+    # Similarly, for motor2
+    if gassep2 is not None and gassep2 != "None" and gassep2 in [gassep['label'] for gassep in
+                                                                 gas_sep_UT_configurations.get(gassep_equipment, [])]:
+        gassep2_data = next(gassep for gassep in gas_sep_UT_configurations[gassep_equipment] if gassep['label'] == gassep2)
+        gassep2_length = gassep2_data["length"]
+        gassep2_weight = gassep2_data["weight"]
+
+    else:
+        gassep2_length, gassep2_weight = 0, 0
+
+
+    pump_equipment = int(pump_equipment) if pump_equipment is not None else None
+    pump1_length, pump1_weight = 0, 0
+    pump2_length, pump2_weight = 0, 0
+    pump3_length, pump3_weight = 0, 0
+    pump4_length, pump4_weight = 0, 0
+    pump5_length, pump5_weight = 0, 0
+    pump6_length, pump6_weight = 0, 0
+
+    # Check if equipment is selected and convert it to integer
+    if pump1 is not None and pump1 != "None" and pump1 in [str(pump) for pump in
+                                                           pump_configurations.get(pump_equipment, {}).keys()]:
+        pump1_data = pump_configurations[pump_equipment][int(pump1)]
+        pump1_length = pump1_data["length"]
+        pump1_weight = pump1_data["weight"]
+
+    else:
+        pump1_length, pump1_weight = 0, 0
+
+
+    # Similarly, for motor2
+    if pump2 is not None and pump2 != "None" and pump2 in [str(pump) for pump in
+                                                           pump_configurations.get(pump_equipment, {}).keys()]:
+        pump2_data = pump_configurations[pump_equipment][int(pump2)]
+        pump2_length = pump2_data["length"]
+        pump2_weight = pump2_data["weight"]
+
+    else:
+        pump2_length, pump2_weight = 0, 0
+
+
+    if pump3 is not None and pump3 != "None" and pump3 in [str(pump) for pump in
+                                                           pump_configurations.get(pump_equipment, {}).keys()]:
+        pump3_data = pump_configurations[pump_equipment][int(pump3)]
+        pump3_length = pump3_data["length"]
+        pump3_weight = pump3_data["weight"]
+
+    else:
+        pump3_length, pump3_weight = 0, 0
+
+
+    if pump4 is not None and pump4 != "None" and pump4 in [str(pump) for pump in
+                                                           pump_configurations.get(pump_equipment, {}).keys()]:
+        pump4_data = pump_configurations[pump_equipment][int(pump4)]
+        pump4_length = pump4_data["length"]
+        pump4_weight = pump4_data["weight"]
+
+    else:
+        pump4_length, pump4_weight = 0, 0
+
+
+    # Handle Pump 5 selection
+    if pump5 is not None and pump5 != "None" and pump5 in [str(pump) for pump in
+                                                           pump_configurations.get(pump_equipment, {}).keys()]:
+        pump5_data = pump_configurations[pump_equipment][int(pump5)]
+        pump5_length = pump5_data["length"]
+        pump5_weight = pump5_data["weight"]
+
+    else:
+        pump5_length, pump5_weight = 0, 0
+
+
+    # Handle Pump 6 selection
+    if pump6 is not None and pump6 != "None" and pump6 in [str(pump) for pump in
+                                                           pump_configurations.get(pump_equipment, {}).keys()]:
+        pump6_data = pump_configurations[pump_equipment][int(pump6)]
+        pump6_length = pump6_data["length"]
+        pump6_weight = pump6_data["weight"]
+
+    else:
+        pump6_length, pump6_weight = 0, 0
+
+    #motor2_I= None
+    #seal1_I= None
+    #seal2_I= None
+    #gassep1_I=None
+    #gassep2_I = None
+    #pump1_I = None
+    #pump2_I = None
+    #pump3_I = None
+    #pump4_I = None
+    #pump5_I = None
+    #ump6_I = None
+
+    if motor_equipment is not None:
+        motor1_I=motorI
+        if motor2 != "None":
+            motor2_I= motorI
+        else:
+            motor2_I= None
+    else:
+        motor1_I=None
+
+    if seal_equipment is not None:
+        seal1_I = sealI  # Assign the correct moment of inertia
+        print(f'Seal I={seal1_I}')
+        if seal2 != "None":  # Check if seal2 is not "None"
+            seal2_I = sealI  # Assign the second seal's moment of inertia
+        else:
+            seal2_I = None  # If seal2 is not selected, set it to None
+    else:
+        seal1_I = None  # If seal_equipment is None, set seal1_I to None
+
+    if gassep_equipment is not None:
+        gassep1_I = intakeI  # Assign the correct moment of inertia for gas separator
+
+        if gassep2 != "None":  # Check if gassep2 is not "None"
+            gassep2_I = intakeI  # Assign the second gas separator's moment of inertia
+        else:
+            gassep2_I = None  # If gassep2 is not selected, set it to None
+    else:
+        gassep1_I = None  # If gassep_equipment is None, set gassep1_I to None
+
+
+    # Assuming you want to check if pump equipment is valid (i.e., not "None")
+    #if pump_equipment is not None:  # Check if pump equipment is selected
+        #pump1_I = pumpI  # Assign inertia for pump 1
+
+
+        # Check if each pump is not the "None" string (or empty string, or actual None)
+        #if pump2 not in ["None", None, ""]:  # Check if pump2 is not "None", None, or empty
+         #   pump2_I = pumpI  # Assign inertia for pump 2
+        #else:
+           # pump2_I = None  # If pump2 is not selected, set it to None
+
+      # if pump3 not in ["None", None, ""]:  # Same check for pump3
+           # pump3_I = pumpI  # Assign inertia for pump 3
+       #else:
+         #   pump3_I = None  # If pump3 is not selected, set it to None
+
+       # if pump4 not in ["None", None, ""]:  # Same check for pump4
+          #  pump4_I = pumpI  # Assign inertia for pump 4
+        #else:
+         #   pump4_I = None  # If pump4 is not selected, set it to None
+
+        #if pump5 not in ["None", None, ""]:  # Same check for pump5
+          #  pump5_I = pumpI  # Assign inertia for pump 5
+       # else:
+         #   pump5_I = None  # If pump5 is not selected, set it to None
+
+        #if pump6 not in ["None", None, ""]:  # Same check for pump6
+        #    pump6_I = pumpI  # Assign inertia for pump 6
+        #else:
+        #    pump6_I = None  # If pump6 is not selected, set it to None
+
+    #else:
+        # If no pump equipment is selected (i.e., pump_equipment is None)
+       #pump1_I = pump2_I = pump3_I = pump4_I = pump5_I = pump6_I = None
+
+
+    total_length=motor_UT_length+motor_LT_length+seal1_length+seal2_length+gassep1_length+gassep2_length+pump1_length+pump2_length+pump3_length+pump4_length+pump5_length+pump6_length
+    #rint(total_length)
+    total_weight = motor_UT_weight + motor_LT_weight + seal1_weight + seal2_weight + gassep1_weight + gassep2_weight + pump1_weight + pump2_weight + pump3_weight + pump4_weight + pump5_weight + pump6_weight
+    incrementor = (total_length * 12 / segment)
+
+
+    if tubing_effect == "2 1/2":
+        tubing_I=0.9654
+    elif tubing_effect == "2 7/8":
+        tubing_I=1.61
+    elif tubing_effect == "3 1/2":
+        tubing_I= 3.017
+    elif tubing_effect == "4 1/2":
+        tubing_I=8.08
+    elif tubing_effect == "None":
+        tubing_I=0
+    else:
+        tubing_I=0
+
+    if stinger_effect == "2 1/2":
+        tubing_I2=0.9654
+    elif stinger_effect == "2 7/8":
+        tubing_I2=1.61
+    elif stinger_effect == "3 1/2":
+        tubing_I2= 3.017
+    elif stinger_effect == "4 1/2":
+        tubing_I2=8.08
+    elif stinger_effect == "None":
+        tubing_I2=0
+    else:
+        tubing_I2=0
+
+
+
+    # Logic for Casing Dim handling
+    casing_id_value = None  # Initializing the casing_id_value
+
+    # Check if casing_OD is set
+    if not casing_dim or not casing_OD or not casing_weight:
+
+        return  # No need to return anything if conditions aren't met
+
+        # Determine if the user selected "Nominal" or other option
+    if casing_dim == "Nominal":
+        # Access the corresponding data from casing_nominal
+        casing_data = casing_nominal.get(casing_OD, [])
+    else:
+        # Access the corresponding data from casing_id
+        casing_data = casing_id.get(casing_OD, [])
+
+        # Check if casing_data exists and is not empty
+
+        # Iterate through the casing_data to find the corresponding weight
+    for weight in casing_data:
+        if weight['value'] == casing_weight:
+            casing_id_value = weight['id']  # Set the casing ID value when a match is found
+
+            break  # Exit loop once the correct casing ID is found
+
+
+
+    if dls:
+        try:
+            # Check if dls is not None or empty
+            if dls.strip() != "":
+                # Convert dls to float, remove extra spaces
+                dls_new = float(dls.strip())
+                # Now you can safely use dls_new for further calculations
+                deflection = 2.6 * (total_length / 100) ** 2 * dls_new
+            else:
+                # Handle case where dls is empty or invalid
+                dls_new = 0
+                deflection = 0  # Or assign a default value, depends on your need
+        except ValueError:
+            # Error handling for invalid float conversion
+            dls_new = 0  # Set default value
+            deflection = 0  # Or assign a default value
+
+    else:
+        # If dls is None, assign default values
+        dls_new = 0
+        deflection = 0  # Or assign a default value
+
+    if motor_equipment:
+        try:
+            motor_equipment = float(motor_equipment)
+            # Now, divide by 100 to get motor_OD in meters
+            motor_OD = motor_equipment / 100
+            #(f"The motor OD (in meters) is: {motor_OD}")
+        except ValueError:
+            motor_equipment = 0
+
+    if pump_equipment:
+        try:
+            pump_equipment = float(pump_equipment)
+            # Now, divide by 100 to get motor_OD in meters
+            pump_OD = pump_equipment / 100
+        except ValueError:
+            pump_equipment = 0
+
+    #deviationcal=None
+    #bendingdeviation=None
+    casing_id_value = casing_id_value if casing_id_value is not None else 0
+    motor_OD = motor_OD if motor_OD is not None else 0
+    pump_OD = pump_OD if pump_OD is not None else 0
+    print(casing_id_value)
+
+    if casing_id_value:
+        deviationcal = ((casing_id_value - motor_OD) + (casing_id_value - pump_OD)) / 2
+        bendingdeviation = (((casing_id_value - pump_OD) - deviationcal) / 2) + deviationcal
+
+    joint_length = 30
+    if 'dls_new' in locals():
+        joint_length = 30
+        tubing_deflection = 2.6 * (joint_length / 100) ** 2 * dls_new
+
+    else:
+        tubing_deflection = 0  # Default value or fallback
+
+
+    tubing_moment = tubing_deflection * modulus * tubing_I * joint_length * 12 / (joint_length * 12 / 2) ** 3
+    tubing_moment_2 = tubing_deflection * modulus * tubing_I2 * joint_length * 12 / (joint_length * 12 / 2) ** 3
+
+    # Initialize the break variables to None
+    break1 = break2 = break3 = break4 = break5 = break6 = break7 = break8 = break9 = break10 = break11 = break12 = None
+
+
+    # This is the condition we're checking
+    if motor1 is not None:
+        break1 = round(motor_LT_length, 1)
+
+    else:
+        break1 = 0
+    if motor2 is not None:
+        break2 = round(motor_UT_length + break1, 1)
+    else:
+        break2 = 0
+
+    if seal1 is not None:
+        break3 = round(motor_UT_length + motor_LT_length + seal1_length, 1)
+    else:
+        break3 = 0
+
+    if seal2 is not None:
+        break4 = round(motor_UT_length + motor_LT_length + seal1_length + seal2_length, 1)
+    else:
+        break4 = 0
+
+    if gassep1 is not None:
+        break5 = round(motor_UT_length + motor_LT_length + seal1_length + seal2_length + gassep1_length, 1)
+    else:
+        break5 = 0
+
+    if gassep2 is not None:
+        break6 = round(motor_UT_length + motor_LT_length + seal1_length + seal2_length + gassep1_length + gassep2_length, 1)
+    else:
+        break6 = 0
+
+    if pump1 is not None and pump2 is not None:
+        break7 = round(motor_UT_length + motor_LT_length + seal1_length + seal2_length + gassep1_length + gassep2_length + pump1_length, 1)
+    else:
+        break7 = 0
+
+    if pump2 is not None and pump3 is not None:
+        break8 = round(motor_UT_length + motor_LT_length + seal1_length + seal2_length + gassep1_length + gassep2_length+ pump1_length + pump2_length, 1)
+    else:
+        break8 = 0
+
+    if pump3 is not None and pump4 is not None:
+        break9 = round(
+            motor_UT_length + motor_LT_length + seal1_length + seal2_length + gassep1_length + gassep2_length + pump1_length + pump2_length + pump3_length,
+            1)
+    else:
+        break9 = 0
+
+    if pump4 is not None and pump5 is not None:
+        break10 = round(
+            motor_UT_length + motor_LT_length + seal1_length + seal2_length + gassep1_length + gassep2_length + pump1_length + pump2_length + pump3_length + pump4_length,
+            1)
+    else:
+        break10 = 0
+
+    if pump5 is not None and pump6 is not None:
+        break11 = round(
+            motor_UT_length + motor_LT_length + seal1_length + seal2_length + gassep1_length + gassep2_length + pump1_length + pump2_length + pump3_length + pump4_length + pump5_length,
+            1)
+    else:
+        break11 = 0
+
+    # Calculate break a, b, c, d, e for each break group
+    # Break 1:
+    if break1 > 0:
+        break1a = break1 + 0.1
+        break1b = break1a + 0.1
+        break1c = break1b + 0.1
+        break1d = break1c + 0.1
+        break1e = break1d + 0.1
+    else:
+        break1a = break1b = break1c = break1d = break1e = 0
+
+    # Break 2:
+    if break2 > 0:
+        break2a = break2 + 0.1
+        break2b = break2a + 0.1
+        break2c = break2b + 0.1
+        break2d = break2c + 0.1
+        break2e = break2d + 0.1
+    else:
+        break2a = break2b = break2c = break2d = break2e = 0
+
+    # Break 3:
+    if break3 > 0:
+        break3a = break3 + 0.1
+        break3b = break3a + 0.1
+        break3c = break3b + 0.1
+        break3d = break3c + 0.1
+        break3e = break3d + 0.1
+    else:
+        break3a = break3b = break3c = break3d = break3e = 0
+
+    # Break 4:
+    if break4 > 0:
+        break4a = break4 + 0.1
+        break4b = break4a + 0.1
+        break4c = break4b + 0.1
+        break4d = break4c + 0.1
+        break4e = break4d + 0.1
+    else:
+        break4a = break4b = break4c = break4d = break4e = 0
+
+    # Break 5:
+    if break5 > 0:
+        break5a = break5 + 0.1
+        break5b = break5a + 0.1
+        break5c = break5b + 0.1
+        break5d = break5c + 0.1
+        break5e = break5d + 0.1
+    else:
+        break5a = break5b = break5c = break5d = break5e = 0
+
+    # Break 6:
+    if break6 > 0:
+        break6a = break6 + 0.1
+        break6b = break6a + 0.1
+        break6c = break6b + 0.1
+        break6d = break6c + 0.1
+        break6e = break6d + 0.1
+    else:
+        break6a = break6b = break6c = break6d = break6e = 0
+
+    # Break 7:
+    if break7 > 0:
+        break7a = break7 + 0.1
+        break7b = break7a + 0.1
+        break7c = break7b + 0.1
+        break7d = break7c + 0.1
+        break7e = break7d + 0.1
+    else:
+        break7a = break7b = break7c = break7d = break7e = 0
+
+    # Break 8:
+    if break8 > 0:
+        break8a = break8 + 0.1
+        break8b = break8a + 0.1
+        break8c = break8b + 0.1
+        break8d = break8c + 0.1
+        break8e = break8d + 0.1
+    else:
+        break8a = break8b = break8c = break8d = break8e = 0
+
+    # Break 9:
+    if break9 > 0:
+        break9a = break9 + 0.1
+        break9b = break9a + 0.1
+        break9c = break9b + 0.1
+        break9d = break9c + 0.1
+        break9e = break9d + 0.1
+    else:
+        break9a = break9b = break9c = break9d = break9e = 0
+
+    # Break 10:
+    if break10 > 0:
+        break10a = break10 + 0.1
+        break10b = break10a + 0.1
+        break10c = break10b + 0.1
+        break10d = break10c + 0.1
+        break10e = break10d + 0.1
+    else:
+        break10a = break10b = break10c = break10d = break10e = 0
+
+    # Break 11:
+    if break11 > 0:
+        break11a = break11 + 0.1
+        break11b = break11a + 0.1
+        break11c = break11b + 0.1
+        break11d = break11c + 0.1
+        break11e = break11d + 0.1
+    else:
+        break11a = break11b = break11c = break11d = break11e = 0
+
+    if break11 != 0:
+        temp_break1 = break11
+        temp_break = break10
+    elif break11 == 0 and break10 != 0:
+        temp_break1 = break10
+        temp_break = break9
+    elif break11 == 0 and break10 == 0 and break9 != 0:
+        temp_break1 = break9
+        temp_break = break8
+    elif break11 == 0 and break10 == 0 and break9 == 0 and break8 != 0:
+        temp_break1 = break8
+        temp_break = break7
+    elif break11 == 0 and break10 == 0 and break9 == 0 and break8 == 0 and break7 != 0:
+        temp_break1 = break7
+        temp_break = break6
+    elif break11 == 0 and break10 == 0 and break9 == 0 and break8 == 0 and break7 == 0 and break6 != 0:
+        temp_break1 = break6
+        temp_break = break5
+    else:
+        temp_break1 = temp_break = 0
+
+
+    tubing_moment_length = 0
+    tubing_moment_increment = 0
     
 
 
